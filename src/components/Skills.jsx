@@ -16,7 +16,7 @@ export default function Skills() {
         },
         {
             category: 'Frameworks',
-            items: ['React JS', 'Node JS', 'Express', 'Tailwind', 'Bootstrap', 'Material UI', 'Scikit learn', 'Pandas', 'Numpy'],
+            items: ['React JS', 'Node JS', 'Express','Angular', 'Tailwind', 'Bootstrap', 'Material UI', 'Scikit learn', 'Pandas', 'Numpy'],
             icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="2" y="2" width="20" height="20" rx="2" stroke="#ef4444" strokeWidth="2" />
@@ -27,7 +27,7 @@ export default function Skills() {
         },
         {
             category: 'Tools',
-            items: ['Git', 'VS Code', 'MongoDB', 'PostgreSQL', 'Vercel', 'CISCO Packet Tracer', 'Wireshark'],
+            items: ['Git', 'VS Code', 'MongoDB', 'PostgreSQL', 'Vercel','MySQL','Oracle', 'CISCO Packet Tracer', 'Wireshark','Microsoft Office'],
             icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="12" cy="12" r="10" stroke="#ef4444" strokeWidth="2" />
@@ -43,7 +43,7 @@ export default function Skills() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="max-w-6xl mx-auto py-12 sm:py-16 md:py-24 px-4"
+            className="max-w-6xl mx-auto pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-24 px-4"
         >
             <h2 className="text-2xl sm:text-3xl font-bold text-red-600 dark:text-red-400 mb-8 sm:mb-12 text-center md:text-left">My Skills</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">

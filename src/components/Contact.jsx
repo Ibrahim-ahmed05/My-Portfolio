@@ -37,7 +37,7 @@ export default function Contact() {
     };
 
     return (
-        <section className="max-w-2xl mx-auto py-12 sm:py-16 md:py-24 px-4">
+        <section className="max-w-2xl mx-auto pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-24 px-4">
             <h2 className="text-2xl sm:text-3xl font-bold text-red-600 dark:text-red-400 mb-6 sm:mb-8 text-center md:text-left">Contact</h2>
             <motion.form
                 ref={form}

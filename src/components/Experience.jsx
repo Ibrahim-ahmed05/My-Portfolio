@@ -7,7 +7,7 @@ export default function Experience() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="max-w-3xl mx-auto py-12 sm:py-16 md:py-24 px-4"
+            className="max-w-3xl mx-auto pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-24 px-4"
         >
             <div className="bg-white dark:bg-black rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 border-l-4 border-red-500 dark:border-red-700">
                 <h2 className="text-2xl sm:text-3xl font-bold text-red-600 dark:text-red-400 mb-4 sm:mb-6 text-center md:text-left">Experience</h2>

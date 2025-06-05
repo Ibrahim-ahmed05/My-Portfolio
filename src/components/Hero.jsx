@@ -1,8 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import avatar from '../assets/avatar2.png'; // Adjust path to your saved image
 
 export default function Hero() {
+    const roles = [
+        "Computer Science Undergraduate",
+        "MERN Stack Developer",
+        "Aspiring Data Scientist"
+    ];
+    const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+    const [currentText, setCurrentText] = useState('');
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [typingSpeed, setTypingSpeed] = useState(150);
+
+    useEffect(() => {
+        const currentRole = roles[currentRoleIndex];
+
+        if (!isDeleting && currentText === currentRole) {
+            // Pause before starting to delete
+            setTimeout(() => setIsDeleting(true), 2000);
+            return;
+        }
+
+        if (isDeleting && currentText === '') {
+            setIsDeleting(false);
+            setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+            return;
+        }
+
+        const timeout = setTimeout(() => {
+            if (!isDeleting) {
+                setCurrentText(currentRole.slice(0, currentText.length + 1));
+                setTypingSpeed(150);
+            } else {
+                setCurrentText(currentRole.slice(0, currentText.length - 1));
+                setTypingSpeed(50);
+            }
+        }, typingSpeed);
+
+        return () => clearTimeout(timeout);
+    }, [currentText, isDeleting, currentRoleIndex, roles, typingSpeed]);
+
     return (
         <section className="flex flex-col items-center justify-center min-h-screen pt-20 md:pt-24 pb-8 md:pb-12 px-4 bg-gradient-to-br from-red-900 via-black to-red-950 dark:from-black dark:via-black dark:to-black relative overflow-hidden">
             {/* Animated Background */}
@@ -52,9 +90,10 @@ export default function Hero() {
                 initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.9, duration: 0.7 }}
-                className="z-10 text-lg sm:text-xl md:text-2xl font-semibold text-red-600 dark:text-red-400 text-center mb-2 px-4"
+                className="z-10 text-lg sm:text-xl md:text-2xl font-semibold text-red-600 dark:text-red-400 text-center mb-2 px-4 min-h-[2.5rem]"
             >
-                Computer Science Undergraduate
+                {currentText}
+                <span className="animate-blink">|</span>
             </motion.h2>
             <motion.p
                 initial={{ y: 40, opacity: 0 }}

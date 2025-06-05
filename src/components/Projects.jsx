@@ -52,7 +52,7 @@ export default function Projects() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="max-w-6xl mx-auto py-12 sm:py-16 md:py-24 px-4"
+            className="max-w-6xl mx-auto pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-24 px-4"
         >
             <h2 className="text-2xl sm:text-3xl font-bold text-red-600 dark:text-red-400 mb-8 sm:mb-12 text-center md:text-left">My Projects</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">

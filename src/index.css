@@ -5,6 +5,25 @@
 body {
     font-family: 'Inter', sans-serif;
 }
-.h2{
+
+.h2 {
     text-align: center;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+.animate-blink {
+    animation: blink 1s step-end infinite;
+    display: inline-block;
+    margin-left: 2px;
 }

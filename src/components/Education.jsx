@@ -13,7 +13,20 @@ export default function Education() {
                     <path d="M2 17L12 22L22 17" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M2 12L12 17L22 12" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-            )
+            ),
+            courseWork: [
+                "Programming Fundamentals",
+                "Object Oriented Programming",
+                "Data Structures",
+                "Operating Systems",
+                "Database",
+                "Software Engineering",
+                "Artificial Intelligence",
+                "Data Science"
+            ],
+            honors: [
+                "Dean's List Holder (3.5+ SGPA)"
+            ]
         },
         {
             institution: "Pakistan International School, Jeddah",
@@ -25,7 +38,10 @@ export default function Education() {
                     <path d="M2 17L12 22L22 17" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M2 12L12 17L22 12" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-            )
+            ),
+            honors: [
+                "Overall First Position in Intermediate"
+            ]
         }
     ];
 
@@ -34,7 +50,7 @@ export default function Education() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="max-w-3xl mx-auto py-12 sm:py-16 md:py-24 px-4"
+            className="max-w-3xl mx-auto pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-24 px-4"
         >
             <h2 className="text-2xl sm:text-3xl font-bold text-red-600 dark:text-red-400 mb-6 sm:mb-8 text-center md:text-left">Education</h2>
             <div className="space-y-4 sm:space-y-6">
@@ -50,10 +66,42 @@ export default function Education() {
                             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-tr from-red-600 to-red-800 flex items-center justify-center shadow-lg">
                                 {edu.icon}
                             </div>
-                            <div className="text-center sm:text-left">
+                            <div className="flex-1 text-center sm:text-left">
                                 <h3 className="text-lg sm:text-xl font-bold text-red-600 dark:text-red-400">{edu.institution}</h3>
                                 <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">{edu.degree}</p>
                                 <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">{edu.year}</p>
+
+                                {edu.courseWork && (
+                                    <div className="mt-4">
+                                        <h4 className="text-base sm:text-lg font-semibold text-red-500 dark:text-red-400 mb-2">Relevant Course Work</h4>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                            {edu.courseWork.map((course, idx) => (
+                                                <div key={idx} className="flex items-center gap-2">
+                                                    <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                    <span className="text-sm sm:text-base text-gray-600 dark:text-gray-300">{course}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {edu.honors && (
+                                    <div className="mt-4">
+                                        <h4 className="text-base sm:text-lg font-semibold text-red-500 dark:text-red-400 mb-2">Honors & Awards</h4>
+                                        <div className="space-y-2">
+                                            {edu.honors.map((honor, idx) => (
+                                                <div key={idx} className="flex items-center gap-2">
+                                                    <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                                    </svg>
+                                                    <span className="text-sm sm:text-base text-gray-600 dark:text-gray-300">{honor}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </motion.div>
