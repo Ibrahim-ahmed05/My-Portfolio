@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import avatar from '../assets/avatar2.png'; // Adjust path to your saved image
+import resume from '../assets/Resume.pdf'; // Add this import for the resume
 
 export default function Hero() {
     const roles = [
@@ -115,6 +116,83 @@ export default function Hero() {
                 <a href="https://linkedin.com/in/ibrahim-ahmed05" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2 rounded-lg bg-red-100 text-red-700 font-semibold shadow hover:bg-red-200 transition-colors motion-safe:hover:scale-105">
                     LinkedIn
                 </a>
+                <motion.a
+                    href={resume}
+                    download
+                    whileHover={{
+                        scale: 1.05,
+                        boxShadow: "0 0 20px rgba(239, 68, 68, 0.5)"
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2 rounded-lg bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold shadow-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 relative overflow-hidden group"
+                >
+                    <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20"
+                        initial={{ x: '-100%' }}
+                        animate={{ x: '100%' }}
+                        transition={{
+                            duration: 1.5,
+                            repeat: Infinity,
+                            ease: "linear"
+                        }}
+                    />
+                    <motion.div
+                        className="absolute inset-0 bg-red-400 opacity-0 group-hover:opacity-10"
+                        animate={{
+                            scale: [1, 1.2, 1],
+                            opacity: [0, 0.2, 0]
+                        }}
+                        transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                    />
+                    <span className="relative z-10 flex items-center gap-2">
+                        <motion.svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            animate={{
+                                y: [0, -2, 0],
+                            }}
+                            transition={{
+                                duration: 1.5,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                            }}
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </motion.svg>
+                        <motion.span
+                            animate={{
+                                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                            }}
+                            transition={{
+                                duration: 3,
+                                repeat: Infinity,
+                                ease: "linear"
+                            }}
+                            className="bg-gradient-to-r from-white via-red-100 to-white bg-[length:200%_auto] bg-clip-text text-transparent"
+                        >
+                            Download Resume
+                        </motion.span>
+                    </span>
+                    <motion.div
+                        className="absolute inset-0 border-2 border-red-400 rounded-lg opacity-0 group-hover:opacity-100"
+                        animate={{
+                            scale: [1, 1.05, 1],
+                            opacity: [0, 0.5, 0]
+                        }}
+                        transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                    />
+                </motion.a>
             </motion.div>
         </section>
     );
