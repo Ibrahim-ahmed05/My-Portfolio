@@ -19,10 +19,13 @@ export default function Education() {
                 "Object Oriented Programming",
                 "Data Structures",
                 "Operating Systems",
-                "Database",
+                "Database Management Systems",
+                "Computer Networks",
+                "Parallel and Distributed Computing",
                 "Software Engineering",
                 "Artificial Intelligence",
-                "Data Science"
+                "Data Science",
+
             ],
             honors: [
                 "Dean's List Holder (3.5+ SGPA)"

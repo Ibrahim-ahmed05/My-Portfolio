@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import avatar from '../assets/avatar2.png'; // Adjust path to your saved image
-import resume from '../assets/Resume.pdf'; // Add this import for the resume
+import avatar from '../assets/avatar2.png';
+import resume from '../assets/Resume.pdf';
 
 export default function Hero() {
     const roles = [
@@ -67,7 +67,7 @@ export default function Hero() {
                     src={avatar}
                     alt="Typing Avatar"
                     className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover shadow-xl border-4 border-red-500"
-                    animate={{ y: [1, -2, -1], rotate: [0, -2, -4, 1] }}
+                    animate={{ y: [-4, -4, -1], rotate: [1, -2, -1, -2] }}
                     transition={{
                         repeat: Infinity,
                         repeatType: 'mirror',
@@ -134,18 +134,6 @@ export default function Hero() {
                             duration: 1.5,
                             repeat: Infinity,
                             ease: "linear"
-                        }}
-                    />
-                    <motion.div
-                        className="absolute inset-0 bg-red-400 opacity-0 group-hover:opacity-10"
-                        animate={{
-                            scale: [1, 1.2, 1],
-                            opacity: [0, 0.2, 0]
-                        }}
-                        transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut"
                         }}
                     />
                     <span className="relative z-10 flex items-center gap-2">
