@@ -50,9 +50,9 @@ export default function About() {
                     <div className="h-1.5 w-24 bg-gradient-to-r from-rose-600 to-rose-400 rounded-full" />
                 </motion.div>
 
-                <div className="grid lg:grid-cols-12 gap-16 lg:gap-8 items-center">
+                <div className="grid lg:grid-cols-12 gap-16 lg:gap-8 items-center w-full">
                     {/* Left - Code Editor (Col Span 7) */}
-                    <motion.div variants={itemVariants} className="lg:col-span-7">
+                    <motion.div variants={itemVariants} className="lg:col-span-7 min-w-0 w-full">
                         <CodeEditor />
                         
                         {/* Contact info below editor */}
@@ -84,7 +84,7 @@ export default function About() {
                     </motion.div>
 
                     {/* Right - Avatar + Stats (Col Span 5) */}
-                    <div className="lg:col-span-5 flex flex-col items-center gap-10">
+                    <div className="lg:col-span-5 flex flex-col items-center gap-10 min-w-0 w-full">
                         {/* Avatar */}
                         <motion.div variants={itemVariants} className="relative group">
                             <div className="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-rose-600/30 via-rose-500/10 to-transparent blur-2xl group-hover:blur-3xl transition-all duration-500" />

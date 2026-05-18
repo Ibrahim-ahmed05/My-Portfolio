@@ -128,8 +128,8 @@ const CodeEditor = () => {
             </div>
 
             {/* Code Editor Body */}
-            <div className="p-5 sm:p-6 overflow-x-auto min-h-[380px]">
-                <div className="flex flex-col">
+            <div className="p-4 sm:p-6 overflow-x-auto min-h-[300px] sm:min-h-[380px]">
+                <div className="flex flex-col min-w-max">
                     {displayedLines.map((line, index) => (
                         <motion.div
                             key={index}

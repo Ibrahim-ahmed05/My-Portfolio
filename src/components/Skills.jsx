@@ -25,15 +25,15 @@ const skillsData = [
 ];
 
 const SkillItem = ({ skill }) => (
-    <div className="flex flex-col items-center justify-center p-6 mx-3 w-32 h-32 md:w-36 md:h-36 bg-white/[0.02] backdrop-blur-md rounded-2xl border border-white/5 hover:border-rose-500/40 transition-all duration-300 group hover:-translate-y-2 hover:bg-white/5 hover:shadow-[0_0_30px_rgba(225,29,72,0.15)] cursor-pointer">
-        <div className="relative w-14 h-14 md:w-16 md:h-16 mb-4 filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 drop-shadow-2xl">
+    <div className="flex flex-col items-center justify-center p-3 md:p-6 mx-2 md:mx-3 w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 bg-white/[0.02] backdrop-blur-md rounded-2xl border border-white/5 hover:border-rose-500/40 transition-all duration-300 group hover:-translate-y-2 hover:bg-white/5 hover:shadow-[0_0_30px_rgba(225,29,72,0.15)] cursor-pointer shrink-0">
+        <div className="relative w-8 h-8 sm:w-14 sm:h-14 md:w-16 md:h-16 mb-2 sm:mb-4 filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 drop-shadow-2xl">
             {skill.name === 'Express' || skill.name === 'Next.js' ? (
                 <img src={skill.icon} alt={skill.name} className="w-full h-full object-contain invert" />
             ) : (
                 <img src={skill.icon} alt={skill.name} className="w-full h-full object-contain" />
             )}
         </div>
-        <span className="text-xs md:text-sm font-semibold text-slate-400 group-hover:text-white transition-colors">
+        <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-slate-400 group-hover:text-white transition-colors">
             {skill.name}
         </span>
     </div>
@@ -69,7 +69,7 @@ export default function Skills() {
                     <motion.div
                         className="flex min-w-full"
                         animate={{ x: ["0%", "-50%"] }}
-                        transition={{ repeat: Infinity, ease: "linear", duration: 40 }}
+                        transition={{ repeat: Infinity, ease: "linear", duration: 25 }}
                     >
                         {[...skillsData, ...skillsData].map((skill, index) => (
                             <SkillItem key={`row1-${index}`} skill={skill} />
@@ -82,7 +82,7 @@ export default function Skills() {
                     <motion.div
                         className="flex min-w-full"
                         animate={{ x: ["-50%", "0%"] }}
-                        transition={{ repeat: Infinity, ease: "linear", duration: 35 }}
+                        transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
                     >
                         {[...skillsData].reverse().concat([...skillsData].reverse()).map((skill, index) => (
                             <SkillItem key={`row2-${index}`} skill={skill} />
