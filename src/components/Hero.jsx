@@ -1,187 +1,144 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link as ScrollLink } from 'react-scroll';
 import avatar from '../assets/avatar2.png';
-import resume from '../assets/Resume.pdf';
+import resume from '../assets/ResumeLatest.pdf';
+
+const roles = [
+    'Software Developer',
+    'MERN Stack Engineer',
+    'AI/ML Enthusiast',
+    'Final Year CS Student',
+];
 
 export default function Hero() {
-    const roles = [
-        "Computer Science Undergraduate",
-        "MERN Stack Developer",
-        "Aspiring Data Scientist"
-    ];
-    const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-    const [currentText, setCurrentText] = useState('');
-    const [isDeleting, setIsDeleting] = useState(false);
-    const [typingSpeed, setTypingSpeed] = useState(150);
+    const [roleIdx, setRoleIdx] = useState(0);
+    const [text, setText] = useState('');
+    const [deleting, setDeleting] = useState(false);
+    const [speed, setSpeed] = useState(120);
 
     useEffect(() => {
-        const currentRole = roles[currentRoleIndex];
-
-        if (!isDeleting && currentText === currentRole) {
-            // Pause before starting to delete
-            setTimeout(() => setIsDeleting(true), 2000);
+        const role = roles[roleIdx];
+        if (!deleting && text === role) {
+            const t = setTimeout(() => setDeleting(true), 2200);
+            return () => clearTimeout(t);
+        }
+        if (deleting && text === '') {
+            setDeleting(false);
+            setRoleIdx(p => (p + 1) % roles.length);
             return;
         }
-
-        if (isDeleting && currentText === '') {
-            setIsDeleting(false);
-            setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
-            return;
-        }
-
-        const timeout = setTimeout(() => {
-            if (!isDeleting) {
-                setCurrentText(currentRole.slice(0, currentText.length + 1));
-                setTypingSpeed(150);
-            } else {
-                setCurrentText(currentRole.slice(0, currentText.length - 1));
-                setTypingSpeed(50);
-            }
-        }, typingSpeed);
-
-        return () => clearTimeout(timeout);
-    }, [currentText, isDeleting, currentRoleIndex, roles, typingSpeed]);
+        const t = setTimeout(() => {
+            setText(deleting ? role.slice(0, text.length - 1) : role.slice(0, text.length + 1));
+            setSpeed(deleting ? 40 : 120);
+        }, speed);
+        return () => clearTimeout(t);
+    }, [text, deleting, roleIdx, speed]);
 
     return (
-        <section className="flex flex-col items-center justify-center min-h-screen pt-20 md:pt-24 pb-8 md:pb-12 px-4 bg-gradient-to-br from-red-900 via-black to-red-950 dark:from-black dark:via-black dark:to-black relative overflow-hidden">
-            {/* Animated Background */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1 }}
-                className="absolute inset-0 z-0 pointer-events-none"
-            >
-                <svg className="w-full h-full" viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="#ef4444" fillOpacity="0.13" d="M0,160L60,170.7C120,181,240,203,360,197.3C480,192,600,160,720,133.3C840,107,960,85,1080,101.3C1200,117,1320,171,1380,197.3L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z" />
-                </svg>
-            </motion.div>
+        <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-transparent">
+            {/* HW-Accelerated Background Radial Glow */}
+            <div className="absolute inset-0 pointer-events-none hw-accelerate">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[700px] h-[300px] md:h-[700px] bg-rose-600/10 rounded-full blur-[80px] md:blur-[120px]" />
+            </div>
 
-            {/* Avatar Image - Typing Effect */}
-            <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: 'spring', stiffness: 120, delay: 0.5 }}
-                className="z-10 mb-4 md:mb-6"
-            >
-                <motion.img
-                    src={avatar}
-                    alt="Typing Avatar"
-                    className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover shadow-xl border-4 border-red-500"
-                    animate={{ y: [-4, -4, -1], rotate: [1, -2, -1, -2] }}
-                    transition={{
-                        repeat: Infinity,
-                        repeatType: 'mirror',
-                        duration: 1.2,
-                        ease: "easeInOut",
-                        delay: 1
-                    }}
-                />
-            </motion.div>
-
-            {/* Text Content */}
-            <motion.h1
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.7, duration: 0.7 }}
-                className="z-10 text-3xl sm:text-4xl md:text-6xl font-extrabold text-white dark:text-white text-center mb-2 drop-shadow-lg px-4"
-            >
-                Ibrahim Ahmed Malik
-            </motion.h1>
-            <motion.h2
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.9, duration: 0.7 }}
-                className="z-10 text-lg sm:text-xl md:text-2xl font-semibold text-red-600 dark:text-red-400 text-center mb-2 px-4 min-h-[2.5rem]"
-            >
-                {currentText}
-                <span className="animate-blink">|</span>
-            </motion.h2>
-            <motion.p
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1.1, duration: 0.7 }}
-                className="z-10 text-base sm:text-lg md:text-xl text-gray-800 dark:text-gray-200 text-center mb-6 px-4"
-            >
-                "Innovating through Code & AI."
-            </motion.p>
-            <motion.div
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1.3, duration: 0.7 }}
-                className="z-10 flex flex-col sm:flex-row gap-3 sm:gap-4 px-4"
-            >
-                <a href="https://github.com/ibrahim-ahmed05" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2 rounded-lg bg-red-600 text-white font-semibold shadow hover:bg-red-700 transition-colors motion-safe:hover:scale-105">
-                    GitHub
-                </a>
-                <a href="https://linkedin.com/in/ibrahim-ahmed05" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2 rounded-lg bg-red-100 text-red-700 font-semibold shadow hover:bg-red-200 transition-colors motion-safe:hover:scale-105">
-                    LinkedIn
-                </a>
-                <motion.a
-                    href={resume}
-                    download
-                    whileHover={{
-                        scale: 1.05,
-                        boxShadow: "0 0 20px rgba(239, 68, 68, 0.5)"
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2 rounded-lg bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold shadow-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 relative overflow-hidden group"
+            <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 w-full pt-20 pb-12">
+                {/* Status badge */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-rose-500/30 bg-rose-500/10 text-rose-400 text-[10px] sm:text-xs font-semibold tracking-wider uppercase hw-accelerate"
                 >
-                    <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20"
-                        initial={{ x: '-100%' }}
-                        animate={{ x: '100%' }}
-                        transition={{
-                            duration: 1.5,
-                            repeat: Infinity,
-                            ease: "linear"
-                        }}
-                    />
-                    <span className="relative z-10 flex items-center gap-2">
-                        <motion.svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            animate={{
-                                y: [0, -2, 0],
-                            }}
-                            transition={{
-                                duration: 1.5,
-                                repeat: Infinity,
-                                ease: "easeInOut"
-                            }}
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </motion.svg>
-                        <motion.span
-                            animate={{
-                                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                            }}
-                            transition={{
-                                duration: 3,
-                                repeat: Infinity,
-                                ease: "linear"
-                            }}
-                            className="bg-gradient-to-r from-white via-red-100 to-white bg-[length:200%_auto] bg-clip-text text-transparent"
-                        >
-                            Download Resume
-                        </motion.span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse" />
+                    Open to Work
+                </motion.div>
+
+                {/* Avatar */}
+                <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="mb-6 sm:mb-8 hw-accelerate"
+                >
+                    <div className="relative">
+                        <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-rose-600 to-rose-900 blur-md opacity-70" />
+                        <motion.img
+                            src={avatar}
+                            alt="Ibrahim Ahmed Malik"
+                            className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-full object-cover border-2 border-rose-500/50"
+                            animate={{ y: [0, -6, 0] }}
+                            transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
+                        />
+                        <div className="absolute bottom-1 right-1 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-emerald-400 border-2 border-[#080808]" />
+                    </div>
+                </motion.div>
+
+                {/* Name */}
+                <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-2 sm:mb-3 hw-accelerate px-2"
+                >
+                    Ibrahim Ahmed{' '}
+                    <span className="bg-gradient-to-r from-rose-400 to-rose-600 bg-clip-text text-transparent inline-block">
+                        Malik
                     </span>
-                    <motion.div
-                        className="absolute inset-0 border-2 border-red-400 rounded-lg opacity-0 group-hover:opacity-100"
-                        animate={{
-                            scale: [1, 1.05, 1],
-                            opacity: [0, 0.5, 0]
-                        }}
-                        transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
-                    />
-                </motion.a>
-            </motion.div>
+                </motion.h1>
+
+                {/* Typing role */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-lg sm:text-2xl md:text-3xl font-light text-slate-400 mb-6 min-h-[2.5rem] hw-accelerate"
+                >
+                    {text}<span className="animate-blink text-rose-400">|</span>
+                </motion.div>
+
+                {/* Tagline */}
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="max-w-xl text-slate-500 text-sm sm:text-base md:text-lg mb-8 sm:mb-10 leading-relaxed px-4 hw-accelerate"
+                >
+                    Building intelligent, scalable software — from full-stack web apps to AI-powered systems.
+                    Currently working at <span className="text-rose-400 font-medium">Vison71 Technologies</span>.
+                </motion.p>
+
+                {/* CTA Buttons */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center w-full sm:w-auto px-4 hw-accelerate"
+                >
+                    <ScrollLink to="projects" smooth offset={-80} duration={600} className="w-full sm:w-auto">
+                        <motion.button
+                            whileHover={{ scale: 1.03, boxShadow: '0 0 30px rgba(225,29,72,0.35)' }}
+                            whileTap={{ scale: 0.97 }}
+                            className="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-full bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm tracking-wide transition-colors duration-200"
+                        >
+                            View My Work
+                        </motion.button>
+                    </ScrollLink>
+
+                    <motion.a
+                        href={resume}
+                        download="Ibrahim_Ahmed_Malik_Resume.pdf"
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.97 }}
+                        className="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm tracking-wide transition-colors duration-200 flex items-center justify-center gap-2"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download Resume
+                    </motion.a>
+                </motion.div>
+            </div>
         </section>
     );
 }

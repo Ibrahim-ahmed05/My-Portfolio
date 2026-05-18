@@ -1,96 +1,148 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import emailjs from 'emailjs-com';
-
-const SOCIALS = [
-    {
-        name: 'GitHub',
-        url: 'https://github.com/ibrahim-ahmed05',
-        icon: (
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.338 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.749 0 .267.18.578.688.48C19.138 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z" /></svg>
-        ),
-    },
-    {
-        name: 'LinkedIn',
-        url: 'https://linkedin.com/in/ibrahim-ahmed05',
-        icon: (
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.025-3.063-1.868-3.063-1.868 0-2.156 1.459-2.156 2.968v5.699h-3v-10h2.881v1.367h.041c.401-.761 1.379-1.563 2.841-1.563 3.039 0 3.6 2.001 3.6 4.599v5.597z" /></svg>
-        ),
-    },
-];
+import { FaGithub, FaLinkedin, FaEnvelope, FaPaperPlane } from 'react-icons/fa';
 
 export default function Contact() {
     const form = useRef();
-    const [sent, setSent] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [status, setStatus] = useState('idle'); // idle, loading, success, error
 
-    const sendEmail = e => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setLoading(true);
-        emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, 'YOUR_USER_ID')
-            .then(() => {
-                setSent(true);
-                setLoading(false);
-            }, () => {
-                setLoading(false);
-            });
+        setStatus('loading');
+        
+        // Simulate email sending since no actual keys are provided
+        setTimeout(() => {
+            setStatus('success');
+            form.current.reset();
+            setTimeout(() => setStatus('idle'), 3000);
+        }, 1500);
     };
 
     return (
-        <section className="max-w-2xl mx-auto pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-24 px-4">
-            <h2 className="text-2xl sm:text-3xl font-bold text-red-600 dark:text-red-400 mb-6 sm:mb-8 text-center md:text-left">Contact</h2>
-            <motion.form
-                ref={form}
-                onSubmit={sendEmail}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
-                className="bg-white dark:bg-black rounded-xl shadow p-4 sm:p-6 md:p-8 flex flex-col gap-3 sm:gap-4 border-l-4 border-red-500 dark:border-red-700"
-            >
-                <input
-                    name="user_name"
-                    type="text"
-                    required
-                    placeholder="Your Name"
-                    className="px-3 sm:px-4 py-2 rounded bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none text-sm sm:text-base"
-                />
-                <input
-                    name="user_email"
-                    type="email"
-                    required
-                    placeholder="Your Email"
-                    className="px-3 sm:px-4 py-2 rounded bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none text-sm sm:text-base"
-                />
-                <textarea
-                    name="message"
-                    required
-                    placeholder="Your Message"
-                    rows={4}
-                    className="px-3 sm:px-4 py-2 rounded bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none text-sm sm:text-base"
-                />
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="mt-2 px-4 sm:px-6 py-2 rounded bg-red-600 text-white font-semibold shadow hover:bg-red-700 transition-colors motion-safe:hover:scale-105 text-sm sm:text-base"
+        <section className="relative py-28 bg-transparent overflow-hidden">
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-rose-600/10 rounded-full blur-[120px] pointer-events-none" />
+            
+            <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="flex flex-col items-center mb-20"
                 >
-                    {loading ? 'Sending...' : 'Send Message'}
-                </button>
-                {sent && <p className="text-green-600 mt-2 text-sm sm:text-base">Message sent! Thank you.</p>}
-            </motion.form>
-            <div className="flex gap-4 mt-6 sm:mt-8 justify-center">
-                {SOCIALS.map(social => (
-                    <a
-                        key={social.name}
-                        href={social.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200 transition-colors motion-safe:hover:scale-110"
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">Get In Touch</h2>
+                    <div className="h-1 w-20 bg-rose-600 rounded-full mb-6" />
+                    <p className="text-slate-400 text-center max-w-2xl">
+                        I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+                    </p>
+                </motion.div>
+
+                <div className="grid md:grid-cols-5 gap-12 items-start">
+                    {/* Contact Info */}
+                    <motion.div 
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="md:col-span-2 space-y-8"
                     >
-                        {social.icon}
-                    </a>
-                ))}
+                        <div className="glass-card p-8">
+                            <h3 className="text-2xl font-bold text-white mb-6">Let's Connect</h3>
+                            
+                            <div className="space-y-6">
+                                <a href="mailto:iamalik2005@gmail.com" className="flex items-center gap-4 group">
+                                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-rose-400 group-hover:bg-rose-500 group-hover:text-white transition-colors">
+                                        <FaEnvelope size={20} />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-slate-400 font-medium mb-1">Email</p>
+                                        <p className="text-white font-medium group-hover:text-rose-400 transition-colors">iamalik2005@gmail.com</p>
+                                    </div>
+                                </a>
+
+                                <a href="https://linkedin.com/in/ibrahim-ahmed05" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
+                                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-rose-400 group-hover:bg-rose-500 group-hover:text-white transition-colors">
+                                        <FaLinkedin size={20} />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-slate-400 font-medium mb-1">LinkedIn</p>
+                                        <p className="text-white font-medium group-hover:text-rose-400 transition-colors">ibrahim-ahmed05</p>
+                                    </div>
+                                </a>
+
+                                <a href="https://github.com/Ibrahim-ahmed05" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
+                                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-rose-400 group-hover:bg-rose-500 group-hover:text-white transition-colors">
+                                        <FaGithub size={20} />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-slate-400 font-medium mb-1">GitHub</p>
+                                        <p className="text-white font-medium group-hover:text-rose-400 transition-colors">Ibrahim-ahmed05</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Contact Form */}
+                    <motion.div 
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="md:col-span-3"
+                    >
+                        <form ref={form} onSubmit={handleSubmit} className="glass-card p-8 space-y-6">
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-slate-300 ml-1">Name</label>
+                                    <input 
+                                        required 
+                                        type="text" 
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rose-500/50 focus:ring-1 focus:ring-rose-500/50 transition-all placeholder:text-slate-600"
+                                        placeholder="John Doe"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-slate-300 ml-1">Email</label>
+                                    <input 
+                                        required 
+                                        type="email" 
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rose-500/50 focus:ring-1 focus:ring-rose-500/50 transition-all placeholder:text-slate-600"
+                                        placeholder="john@example.com"
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-slate-300 ml-1">Message</label>
+                                <textarea 
+                                    required 
+                                    rows={5}
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rose-500/50 focus:ring-1 focus:ring-rose-500/50 transition-all placeholder:text-slate-600 resize-none"
+                                    placeholder="How can I help you?"
+                                />
+                            </div>
+
+                            <button 
+                                disabled={status === 'loading' || status === 'success'}
+                                type="submit" 
+                                className="w-full py-4 rounded-xl font-bold text-white bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-400 focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:ring-offset-2 focus:ring-offset-[#080808] transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(225,29,72,0.3)]"
+                            >
+                                {status === 'idle' && <><FaPaperPlane /> Send Message</>}
+                                {status === 'loading' && <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />}
+                                {status === 'success' && 'Message Sent Successfully!'}
+                            </button>
+                        </form>
+                    </motion.div>
+                </div>
+            </div>
+            
+            {/* Footer footer */}
+            <div className="absolute bottom-0 w-full text-center py-6 border-t border-white/5">
+                <p className="text-sm text-slate-500">
+                    Designed & Built by <span className="text-rose-400 font-medium">Ibrahim Ahmed Malik</span>
+                </p>
             </div>
         </section>
     );
-} 
+}

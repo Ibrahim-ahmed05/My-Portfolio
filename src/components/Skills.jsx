@@ -1,77 +1,95 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-export default function Skills() {
-    const skills = [
-        {
-            category: 'Languages',
-            items: ['C', 'C++', 'JavaScript', 'Python', 'HTML/CSS', 'SQL'],
-            icon: (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M2 17L12 22L22 17" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M2 12L12 17L22 12" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-            )
-        },
-        {
-            category: 'Frameworks',
-            items: ['React JS', 'Node JS', 'Express','Angular', 'Tailwind', 'Bootstrap', 'Material UI', 'Scikit learn', 'Pandas', 'Numpy'],
-            icon: (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="2" y="2" width="20" height="20" rx="2" stroke="#ef4444" strokeWidth="2" />
-                    <path d="M12 6L12 18" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
-                    <path d="M6 12L18 12" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-            )
-        },
-        {
-            category: 'Tools',
-            items: ['Git', 'VS Code', 'MongoDB', 'PostgreSQL', 'Vercel','MySQL','Oracle', 'CISCO Packet Tracer', 'Wireshark','Microsoft Office'],
-            icon: (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10" stroke="#ef4444" strokeWidth="2" />
-                    <path d="M12 8L12 16" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
-                    <path d="M8 12L16 12" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-            )
-        }
-    ];
+const skillsData = [
+    { name: 'C', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg' },
+    { name: 'C++', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg' },
+    { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg' },
+    { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg' },
+    { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
+    { name: 'HTML5', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg' },
+    { name: 'CSS3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg' },
+    { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
+    { name: 'Next.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg' },
+    { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg' },
+    { name: 'Express', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg' },
+    { name: 'MongoDB', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg' },
+    { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg' },
+    { name: 'FastAPI', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg' },
+    { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg' },
+    { name: 'Tailwind', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
+    { name: 'Scikit-learn', icon: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg' },
+    { name: 'Pandas', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg' },
+    { name: 'Numpy', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg' },
+    { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg' }
+];
 
+const SkillItem = ({ skill }) => (
+    <div className="flex flex-col items-center justify-center p-6 mx-3 w-32 h-32 md:w-36 md:h-36 bg-white/[0.02] backdrop-blur-md rounded-2xl border border-white/5 hover:border-rose-500/40 transition-all duration-300 group hover:-translate-y-2 hover:bg-white/5 hover:shadow-[0_0_30px_rgba(225,29,72,0.15)] cursor-pointer">
+        <div className="relative w-14 h-14 md:w-16 md:h-16 mb-4 filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 drop-shadow-2xl">
+            {skill.name === 'Express' || skill.name === 'Next.js' ? (
+                <img src={skill.icon} alt={skill.name} className="w-full h-full object-contain invert" />
+            ) : (
+                <img src={skill.icon} alt={skill.name} className="w-full h-full object-contain" />
+            )}
+        </div>
+        <span className="text-xs md:text-sm font-semibold text-slate-400 group-hover:text-white transition-colors">
+            {skill.name}
+        </span>
+    </div>
+);
+
+export default function Skills() {
     return (
-        <motion.section
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="max-w-6xl mx-auto pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-24 px-4"
-        >
-            <h2 className="text-2xl sm:text-3xl font-bold text-red-600 dark:text-red-400 mb-8 sm:mb-12 text-center md:text-left">My Skills</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-                {skills.map((skill, index) => (
-                    <motion.div
-                        key={skill.category}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.2 }}
-                        className="bg-white dark:bg-black rounded-xl shadow-lg p-4 sm:p-6 border border-red-200 dark:border-red-800"
-                    >
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center">
-                                {skill.icon}
-                            </div>
-                            <h3 className="text-lg sm:text-xl font-bold text-red-600 dark:text-red-400">{skill.category}</h3>
-                        </div>
-                        <ul className="space-y-1.5 sm:space-y-2">
-                            {skill.items.map((item) => (
-                                <li key={item} className="text-sm sm:text-base text-gray-600 dark:text-gray-300 flex items-center gap-2">
-                                    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500"></span>
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
-                ))}
+        <section className="relative py-32 bg-transparent overflow-hidden">
+            {/* Background elements */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-rose-600/5 rounded-full blur-[150px] pointer-events-none" />
+
+            <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 mb-16 text-center">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                >
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">Tech <span className="bg-gradient-to-r from-rose-400 to-rose-600 bg-clip-text text-transparent">Stack</span></h2>
+                    <p className="text-slate-400 max-w-2xl mx-auto">
+                        Technologies and tools I leverage to build highly scalable applications and intelligent AI models.
+                    </p>
+                </motion.div>
             </div>
-        </motion.section>
+
+            <div className="relative w-full py-10">
+                {/* Edge fade masks */}
+                <div className="absolute top-0 left-0 w-32 md:w-64 h-full bg-gradient-to-r from-[#080808] to-transparent z-20 pointer-events-none" />
+                <div className="absolute top-0 right-0 w-32 md:w-64 h-full bg-gradient-to-l from-[#080808] to-transparent z-20 pointer-events-none" />
+
+                {/* Top Row - Moving Left */}
+                <div className="flex overflow-hidden mb-6">
+                    <motion.div
+                        className="flex min-w-full"
+                        animate={{ x: ["0%", "-50%"] }}
+                        transition={{ repeat: Infinity, ease: "linear", duration: 40 }}
+                    >
+                        {[...skillsData, ...skillsData].map((skill, index) => (
+                            <SkillItem key={`row1-${index}`} skill={skill} />
+                        ))}
+                    </motion.div>
+                </div>
+
+                {/* Bottom Row - Moving Right */}
+                <div className="flex overflow-hidden">
+                    <motion.div
+                        className="flex min-w-full"
+                        animate={{ x: ["-50%", "0%"] }}
+                        transition={{ repeat: Infinity, ease: "linear", duration: 35 }}
+                    >
+                        {[...skillsData].reverse().concat([...skillsData].reverse()).map((skill, index) => (
+                            <SkillItem key={`row2-${index}`} skill={skill} />
+                        ))}
+                    </motion.div>
+                </div>
+            </div>
+        </section>
     );
-} 
+}
