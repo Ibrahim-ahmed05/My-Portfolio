@@ -107,7 +107,9 @@ const InteractiveBackground = () => {
             let numberOfParticles = Math.floor((width * height) / 12000);
             
             // Limit max particles to maintain performance
-            numberOfParticles = Math.min(numberOfParticles, 150);
+            const isMobile = width < 768;
+            const maxParticles = isMobile ? 30 : 100;
+            numberOfParticles = Math.min(numberOfParticles, maxParticles);
             
             for (let i = 0; i < numberOfParticles; i++) {
                 particles.push(new Particle());
@@ -115,6 +117,10 @@ const InteractiveBackground = () => {
         };
 
         const connect = () => {
+            const isMobile = width < 768;
+            // On mobile, skip the expensive O(N^2) connection logic to save CPU and battery
+            if (isMobile) return;
+            
             let maxDistance = 140;
             for (let a = 0; a < particles.length; a++) {
                 for (let b = a; b < particles.length; b++) {
