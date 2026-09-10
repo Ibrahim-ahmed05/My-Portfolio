@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link as ScrollLink } from 'react-scroll';
+
 
 const navLinks = [
     { name: 'Home', to: 'home' },
@@ -19,10 +19,18 @@ export default function Navbar() {
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 40);
-        window.addEventListener('scroll', onScroll);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    useEffect(() => {
+        const observer = new IntersectionObserver(entries => {
+            for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id);
+        }, { rootMargin: '-15% 0px -65% 0px' });
+        document.querySelectorAll('main > section[id]').forEach(section => observer.observe(section));
+        return () => observer.disconnect();
+    }, []);
     return (
         <motion.nav
             initial={{ y: -80, opacity: 0 }}
@@ -30,7 +38,7 @@ export default function Navbar() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
                 scrolled
-                    ? 'bg-black/80 backdrop-blur-2xl border-b border-white/5 shadow-2xl'
+                    ? 'bg-[#fafafa]/95 backdrop-blur-2xl border-b border-stone-900/10 shadow-2xl'
                     : 'bg-transparent'
             }`}
         >
@@ -38,55 +46,55 @@ export default function Navbar() {
                 {/* Logo */}
                 <motion.div whileHover={{ scale: 1.02 }} className="cursor-pointer">
                     <span className="text-xl font-bold tracking-tight">
-                        <span className="text-white">Ibrahim</span>
-                        <span className="text-rose-500">.</span>
+                        <span className="text-stone-900">Ibrahim</span>
+                        <span className="text-stone-700">.</span>
                     </span>
                 </motion.div>
 
                 {/* Desktop Links */}
                 <div className="hidden md:flex items-center gap-1">
                     {navLinks.map(link => (
-                        <ScrollLink
+                        <a
                             key={link.name}
-                            to={link.to}
-                            spy smooth offset={-80} duration={600}
-                            onSetActive={() => setActive(link.to)}
+                            href={`#${link.to}`}
+                            
+                            aria-current={active === link.to ? "location" : undefined}
                             className={`relative px-4 py-2 text-sm font-medium rounded-lg cursor-pointer transition-all duration-200 ${
                                 active === link.to
-                                    ? 'text-white'
-                                    : 'text-slate-400 hover:text-white'
+                                    ? 'text-stone-900'
+                                    : 'text-stone-600 hover:text-stone-900'
                             }`}
                         >
                             {active === link.to && (
                                 <motion.div
                                     layoutId="nav-pill"
-                                    className="absolute inset-0 bg-white/10 rounded-lg"
+                                    className="absolute inset-0 bg-white/60 rounded-lg"
                                     transition={{ type: 'spring', bounce: 0.25, duration: 0.5 }}
                                 />
                             )}
                             <span className="relative z-10">{link.name}</span>
-                        </ScrollLink>
+                        </a>
                     ))}
                 </div>
 
                 {/* CTA */}
                 <div className="hidden md:block">
-                    <ScrollLink to="contact" smooth offset={-80} duration={600}>
+                    <a href="#contact">
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.97 }}
-                            className="px-5 py-2 rounded-full bg-rose-600 hover:bg-rose-500 text-white text-sm font-semibold transition-colors duration-200"
+                            className="px-5 py-2 rounded-full bg-stone-900 hover:bg-stone-700 text-white text-sm font-semibold transition-colors duration-200"
                         >
                             Hire Me
                         </motion.button>
-                    </ScrollLink>
+                    </a>
                 </div>
 
                 {/* Mobile hamburger */}
                 <motion.button
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setIsOpen(!isOpen)}
-                    className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white transition-colors"
+                    className="md:hidden p-2 rounded-lg text-stone-600 hover:text-stone-900 transition-colors"
                     aria-label="Toggle menu"
                 >
                     <div className="w-5 h-4 flex flex-col justify-between">
@@ -114,23 +122,23 @@ export default function Navbar() {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        className="md:hidden bg-black/95 backdrop-blur-2xl border-t border-white/5"
+                        className="md:hidden bg-[#fafafa]/95 backdrop-blur-2xl border-t border-stone-900/10"
                     >
                         <div className="px-5 py-4 flex flex-col gap-1">
                             {navLinks.map(link => (
-                                <ScrollLink
+                                <a
                                     key={link.name}
-                                    to={link.to}
-                                    spy smooth offset={-80} duration={600}
+                                    href={`#${link.to}`}
+                                    
                                     onClick={() => setIsOpen(false)}
                                     className={`px-4 py-3 rounded-xl text-sm font-medium cursor-pointer transition-colors ${
                                         active === link.to
-                                            ? 'bg-white/10 text-white'
-                                            : 'text-slate-400 hover:text-white hover:bg-white/5'
+                                            ? 'bg-white/60 text-stone-900'
+                                            : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
                                     }`}
                                 >
                                     {link.name}
-                                </ScrollLink>
+                                </a>
                             ))}
                         </div>
                     </motion.div>
@@ -139,3 +147,6 @@ export default function Navbar() {
         </motion.nav>
     );
 }
+
+
+

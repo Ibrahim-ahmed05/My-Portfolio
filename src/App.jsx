@@ -1,4 +1,6 @@
+import SmoothScroll from './components/SmoothScroll';
 import React from 'react';
+import { MotionConfig } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -8,11 +10,12 @@ import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import InteractiveBackground from './components/InteractiveBackground';
+import DoodleLayer from './components/DoodleLayer';
 
 function App() {
     return (
-        <div className="min-h-screen bg-[#080808] text-white overflow-x-hidden relative">
-            <InteractiveBackground />
+        <MotionConfig reducedMotion="user"><div className="min-h-screen bg-[#fafafa] text-stone-900 overflow-x-hidden relative">
+            <SmoothScroll /><InteractiveBackground /><DoodleLayer />
             <Navbar />
             <main className="relative z-10">
                 <section id="home"><Hero /></section>
@@ -23,8 +26,10 @@ function App() {
                 <section id="projects"><Projects /></section>
                 <section id="contact"><Contact /></section>
             </main>
-        </div>
+        </div></MotionConfig>
     );
 }
 
 export default App;
+
+

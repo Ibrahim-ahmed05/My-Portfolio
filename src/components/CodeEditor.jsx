@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 // The code structure with syntax highlighting tokens
@@ -101,17 +101,15 @@ const CodeEditor = () => {
 
     useEffect(() => {
         let currentLine = 0;
-        const interval = setInterval(() => {
-            if (currentLine < codeLines.length) {
-                setDisplayedLines(prev => [...prev, codeLines[currentLine]]);
-                currentLine++;
-            } else {
-                clearInterval(interval);
-            }
-        }, 120); // Speed of typing out new lines
-
-        return () => clearInterval(interval);
+        const interval = window.setInterval(() => {
+            currentLine += 1;
+            setDisplayedLines(codeLines.slice(0, currentLine));
+            if (currentLine >= codeLines.length) window.clearInterval(interval);
+        }, 90);
+        return () => window.clearInterval(interval);
     }, []);
+
+
 
     return (
         <div className="w-full rounded-2xl overflow-hidden bg-[#0a0a0a] border border-white/10 shadow-2xl font-mono text-sm sm:text-base hw-accelerate">
@@ -128,8 +126,8 @@ const CodeEditor = () => {
             </div>
 
             {/* Code Editor Body */}
-            <div className="p-4 sm:p-6 overflow-x-auto min-h-[300px] sm:min-h-[380px]">
-                <div className="flex flex-col min-w-max">
+            <div data-native-scroll className="code-editor-body p-4 sm:p-6 overflow-hidden min-h-[300px] sm:min-h-[380px]">
+                <div className="flex flex-col min-w-0">
                     {displayedLines.map((line, index) => (
                         <motion.div
                             key={index}
@@ -138,7 +136,7 @@ const CodeEditor = () => {
                             className="flex"
                         >
                             <span className="w-6 sm:w-8 shrink-0 text-slate-600 select-none text-right pr-4">{index + 1}</span>
-                            <span className="whitespace-pre">
+                            <span className="code-line whitespace-pre-wrap break-words">
                                 {line && line.map((token, i) => (
                                     <span key={i} className={token.color}>{token.text}</span>
                                 ))}
@@ -163,3 +161,5 @@ const CodeEditor = () => {
 };
 
 export default CodeEditor;
+
+
