@@ -11,11 +11,12 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import InteractiveBackground from './components/InteractiveBackground';
 import DoodleLayer from './components/DoodleLayer';
+import MicroDetails from './components/MicroDetails';
 
 function App() {
     return (
         <MotionConfig reducedMotion="user"><div className="min-h-screen bg-[#fafafa] text-stone-900 overflow-x-hidden relative">
-            <SmoothScroll /><InteractiveBackground /><DoodleLayer />
+            <SmoothScroll /><InteractiveBackground /><DoodleLayer /><MicroDetails />
             <Navbar />
             <main className="relative z-10">
                 <section id="home"><Hero /></section>

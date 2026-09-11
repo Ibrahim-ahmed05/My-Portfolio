@@ -1,6 +1,6 @@
-import SectionArtwork from './SectionArtwork';
 import React, { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion, useSpring, useReducedMotion } from 'framer-motion';
+import './Projects.css';
 
 import airlineImg from '../assets/ariline.jpg';
 import thoughtify from '../assets/thoughifyapp.jpg';
@@ -79,38 +79,44 @@ const projects = [
     }
 ];
 
-export default function Projects() {
-    const [page, setPage] = useState(0);
-    const project = projects[page];
-    const next = () => setPage((page + 1) % projects.length);
-    const previous = () => setPage((page - 1 + projects.length) % projects.length);
-    return <section className="project-showcase-section">
-        <div className="project-showcase-wrap">
-            <header className="project-showcase-heading"><div><p className="eyebrow"><span />05 / SELECTED WORK</p><h2>Selected work,<br /><span>one frame at a time.</span></h2></div><SectionArtwork name="projects" /></header>
-            <div className="project-showcase" aria-live="polite">
-                <AnimatePresence mode="wait" initial={false}>
-                    <motion.div key={page} className="project-slide" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -28 }} transition={{ duration: .38 }}>
-                        <div className="project-visual-column">
-                            <div className="project-index">{String(page + 1).padStart(2, '0')} <span>/</span> {String(projects.length).padStart(2, '0')}</div>
-                            <motion.div className="project-tilt-card" initial={{ rotate: page % 2 ? 3 : -3 }} animate={{ rotate: page % 2 ? 1 : -1 }} whileHover={{ rotate: 0, y: -8 }} transition={{ type:'spring', stiffness:100, damping:15 }}>
-                                <div className="project-pixel-corner" aria-hidden="true" />
-                                <img src={project.image} alt={project.title} loading="eager" decoding="async" />
-                                <div className="project-image-label">PROJECT / {String(page + 1).padStart(2, '0')}</div>
-                            </motion.div>
-                            <span className="project-visual-note">A SMALL WINDOW INTO THE WORK</span>
-                        </div>
-                        <div className="project-story">
-                            <p className="project-story-kicker">{project.tags.join('  ·  ')}</p>
-                            <h3>{project.title}</h3>
-                            <div className="project-story-rule" />
-                            <p className="project-story-description">{project.description}</p>
-                            <div className="project-story-meta"><span>ROLE</span><strong>DESIGN / ENGINEERING</strong></div>
-                            {project.link !== '#' && <a className="project-story-link" href={project.link} target="_blank" rel="noopener noreferrer">Open project <span>↗</span></a>}
-                            <div className="project-navigation"><button className="project-arrow-card" onClick={previous} aria-label="Previous project"><span>←</span><small>PREV</small></button><div className="project-progress"><span style={{ width: `${((page + 1) / projects.length) * 100}%` }} /></div><button className="project-arrow-card next" onClick={next} aria-label="Next project"><small>NEXT</small><span>→</span></button></div>
-                        </div>
-                    </motion.div>
-                </AnimatePresence>
+function ProjectTile({ project, index, variant = '' }) {
+    const reduced = useReducedMotion();
+    const rotateX = useSpring(0, { stiffness: 180, damping: 24 });
+    const rotateY = useSpring(0, { stiffness: 180, damping: 24 });
+    function move(event) {
+        if (reduced || event.pointerType !== 'mouse') return;
+        const bounds = event.currentTarget.getBoundingClientRect();
+        rotateX.set(-((event.clientY - bounds.top) / bounds.height - .5) * 6);
+        rotateY.set(((event.clientX - bounds.left) / bounds.width - .5) * 6);
+    }
+    function reset() { rotateX.set(0); rotateY.set(0); }
+    return <motion.article className={`work-tile ${variant}`} style={{ rotateX, rotateY, transformPerspective: 1100 }}
+        onPointerMove={move} onPointerLeave={reset} onPointerCancel={reset}>
+        <div className="work-tile-top"><span>{String(index + 1).padStart(2, '0')} / 09</span>{index === 0 ? <span className="work-featured"><i />Featured project</span> : <span aria-hidden="true">▦</span>}</div>
+        <div className="work-image-stage"><div className="work-image-plane"><img src={project.image} alt={project.title + ' project preview'} loading="lazy" decoding="async" /></div><span className="work-stage-mark" aria-hidden="true">+</span></div>
+        <div className="work-tile-copy"><h3>{project.title}</h3><p>{project.description}</p>
+            <div className="work-tile-bottom"><ul>{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>
+                {project.link !== '#' && <a href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`Open ${project.title}`}>↗</a>}
             </div>
         </div>
+    </motion.article>;
+}
+
+export default function Projects() {
+    const [expanded, setExpanded] = useState(false);
+    return <section className="selected-projects" aria-labelledby="selected-projects-title">
+        <header className="selected-projects-heading">
+            <div><p className="work-eyebrow"><span /> PROJECTS / 05</p><h2 id="selected-projects-title">Selected Projects<span>.</span></h2><p className="work-subtitle">Building thoughtful software that solves real problems.</p></div>
+            <div className="work-editorial"><span>IDEAS<br />INTO USEFUL<br />THINGS.</span><p>A collection of experiments, challenges, and things brought to life through code.</p></div>
+        </header>
+        <div className="work-bento">
+            {projects.slice(0, 4).map((project, index) => <ProjectTile key={project.title} project={project} index={index} variant={index === 0 ? 'work-tile-feature' : index === 3 ? 'work-tile-wide' : ''} />)}
+        </div>
+        <div id="more-selected-projects" className="work-archive" hidden={!expanded}>
+            {expanded && projects.slice(4).map((project, index) => <ProjectTile key={project.title} project={project} index={index + 4} />)}
+        </div>
+        <footer className="work-footer"><span>{expanded ? '09' : '04'} PROJECTS ON DISPLAY <b>·</b> MANY MORE TO COME</span>
+            <button type="button" aria-expanded={expanded} aria-controls="more-selected-projects" onClick={() => setExpanded(!expanded)}>{expanded ? 'Show selected projects' : 'Explore all 9 projects'} <span aria-hidden="true">{expanded ? '−' : '+'}</span></button>
+        </footer>
     </section>;
 }
